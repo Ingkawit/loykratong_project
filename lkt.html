@@ -1,0 +1,120 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <h1>Celestine 2022</h1>
+</head>
+<script type="module">
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-analytics.js";
+import { getDatabase, ref, set, get,child} from "https://www.gstatic.com/firebasejs/9.6.6/firebase-database.js";
+
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+    apiKey: "AIzaSyCCOKaoGbjd7hkt_hNxPLS8TH-KxEq74ec",
+    authDomain: "test-73c25.firebaseapp.com",
+    databaseURL: "https://test-73c25-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "test-73c25",
+    storageBucket: "test-73c25.appspot.com",
+    messagingSenderId: "636471592708",
+    appId: "1:636471592708:web:f06debaa569fa8074ef251",
+    measurementId: "G-63D8MTSCYN"
+};
+const d = new Date();
+let showValue = false;
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getDatabase();
+let message = [];
+let ktcreated = false;
+let ktdiv;
+let ktMes;
+let ktRel;
+let ktImg;
+let ds = {};
+window.onload = ()=>{
+//
+get(ref(db,"/")).then((snapshot)=>{
+    let read_value = snapshot.val();
+    ds = read_value;
+    let s = "";
+    for(var key in read_value){
+        s+=read_value[key]+"\n\n\n"
+    }
+    console.log(s);
+});
+//
+let createB = document.getElementById("create");
+let screen = document.getElementById("screen")
+createB.addEventListener("click",()=>{
+    if(!ktcreated){
+        /*createB.textContent = "สร้างกระทงใหม่"
+        createB.style.backgroundColor = "aquamarine";*/
+        createB.style.display = "none"
+        console.log("Kt created")
+        //
+        ktdiv = document.createElement("div");
+        ktdiv.id="KT"
+        ktdiv.style.width = "30%"
+        ktdiv.style.height = "30%"
+        ktdiv.style.backgroundColor = "yellow"
+        ktImg = document.createElement("img");
+        ktImg.src = "kt1.png"
+        ktMes = document.createElement("textarea")
+        ktMes.style.fontSize = "30px"
+        ktMes.placeholder = "ใส่ข้อความที่นี่"
+        ktRel = document.createElement("button");
+        ktRel.style.width = "50%"
+        ktRel.style.width = "70px"
+        ktRel.style.fontSize = "15px"
+        ktRel.textContent = "ปล่อยกระทง"
+        ktRel.addEventListener("click",()=>{
+            set(ref(db, '/'+d.getTime()), ktMes.value)
+        })
+        screen.appendChild(ktMes)
+        screen.appendChild(ktdiv)
+        screen.appendChild(ktRel)
+        ktdiv.appendChild(ktImg)
+    }
+    ktcreated = true;
+});
+};
+    /*let bt = document.getElementById("save")
+    let sa = document.getElementById("read")
+    bt.addEventListener("click",(ev)=>{
+        let d = new Date();
+        set(ref(db, '/'+d.getHours()+":"+d.getMinutes()+","+d.getDate()), scrambled).then(()=>alert("your writing saved as "+scrambled));
+    });
+    let before = "";
+    sa.addEventListener("click",(ev)=>{
+        showValue=!showValue;
+        if(showValue){
+            before=text_input.value;
+            get(ref(db,"/")).then((snapshot)=>{
+                let read_value = snapshot.val();
+                let s = "";
+                for(var key in read_value){
+                    s+=read_value[key]+"\n\n\n"
+                }
+                text_input.value = s;
+            });
+        }else{
+            text_input.value = before;
+        }
+        
+    });*/
+</script>
+<body>
+<link rel="stylesheet" href="lkt.css">
+<script src="lkt.js" type="text/javascript"></script>
+<center>
+    <div id="screen"></div>
+    <button id="create">สร้างกระทง</button>
+</center>
+</body>
+</html>
