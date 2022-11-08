@@ -31,10 +31,13 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getDatabase();
 let message = [];
+let img = ["https://www.teachengineering.org/Images/edpHub/EDPHub_Graphic.png"];
+let now_selected = 0;
 let ktcreated = false;
 let ktdiv;
 let ktMes;
 let ktRel;
+let ktChg;
 let ktImg;
 let ds = {};
 window.onload = ()=>{
@@ -64,7 +67,16 @@ createB.addEventListener("click",()=>{
         ktdiv.style.height = "30%"
         ktdiv.style.backgroundColor = "yellow"
         ktImg = document.createElement("img");
-        ktImg.src = "kt1.png"
+	  ktImg.style.maxWidth = "100%"
+	  ktImg.style.maxHeight = "100%"
+        ktImg.src = img[now_selected];
+	  ktChg = document.createElement("button")
+	  ktChg.textContent = "เปลี่ยน"
+	  ktChg.addEventListener("click",()=>{
+		now_selected++;
+		if(now_selected>img.length){now_selected = 0}
+		ktImg.src = img[now_selected]
+	  })
         ktMes = document.createElement("textarea")
         ktMes.style.fontSize = "30px"
         ktMes.placeholder = "ใส่ข้อความที่นี่"
@@ -79,6 +91,7 @@ createB.addEventListener("click",()=>{
         screen.appendChild(ktMes)
         screen.appendChild(ktdiv)
         screen.appendChild(ktRel)
+	  screen.appendChild(ktChg);
         ktdiv.appendChild(ktImg)
     }
     ktcreated = true;
