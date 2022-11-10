@@ -160,9 +160,10 @@ createB.addEventListener("click",()=>{
         ktRel.style.fontSize = "25px"
         ktRel.textContent = "ปล่อยกระทง"
         ktRel.addEventListener("click",()=>{
-            set(ref(db, '/'+d.getTime()), ktMes.value)
+		let t = d.getTime();
+            set(ref(db, '/'+t), ktMes.value)
             screen.style.display = "none"
-            update();
+		let nkt = new krathong(t,ktMes.value);
         })
         screen.appendChild(ktMes)
         screen.appendChild(ktdiv)
